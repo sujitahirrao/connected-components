@@ -53,9 +53,10 @@ int main(int argc, char** argv)
 		ImageIO imageIO = ImageIO(imagePath);
 		char** imageMatrix = imageIO.readImage();
 
-		ImageOperations imgOperator = ImageOperations(imageMatrix, imageIO.nRows, imageIO.nCols, imageIO.maxIntensityLevel);
-		int otsuThreshold = imgOperator.getOtsuThreshold();
-		char** threshImg = imgOperator.thresholdByValue(otsuThreshold);
+		ImageOperations imgOperator = ImageOperations();
+		int otsuThreshold = imgOperator.getOtsuThreshold(imageMatrix, imageIO.nRows, imageIO.nCols, imageIO.maxIntensityLevel);
+		char** threshImg = imgOperator.thresholdByValue(
+			imageMatrix, imageIO.nRows, imageIO.nCols, imageIO.maxIntensityLevel, otsuThreshold);
 
 		imageIO.writeImage(threshImg);
 	}

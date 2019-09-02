@@ -9,29 +9,17 @@ ImageOperations::ImageOperations()
 }
 
 
-ImageOperations::ImageOperations(char** _imageMatrix, int _nRows, int _nCols, int _maxIntensityLevel)
-{
-	otsuThreshold = NULL;
-	imageMatrix = _imageMatrix;
-	nRows = _nRows;
-	nCols = _nCols;
-	maxIntensityLevel = _maxIntensityLevel;
-}
-
-
 ImageOperations::~ImageOperations()
 {
-	for (int i = 0; i < nRows; ++i)
-		delete[] imageMatrix[i];
-	delete[] imageMatrix;
 }
 
 
-char** ImageOperations::thresholdByValue(int thresh)
+char** ImageOperations::thresholdByValue(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel, int thresh)
 {
 	if (DEBUG)
 	{
 		//cout << "\nnRow: " << nRows << " " << "nCols: " << nCols << endl;
+		//cout << "thresh: " << thresh << endl;
 	}
 
 	char** threshImg = new char*[nRows];
@@ -40,11 +28,11 @@ char** ImageOperations::thresholdByValue(int thresh)
 		threshImg[i] = new char[nCols];
 		for (int j = 0; j < nCols; j++)
 		{
-			int temp = imageMatrix[i][j];
+			unsigned char temp = imageMatrix[i][j];
 			if (temp < thresh)
 				threshImg[i][j] = 0;
 			else
-				threshImg[i][j] = (char)temp;
+				threshImg[i][j] = temp;
 			
 			/*if (DEBUG)
 			{
@@ -58,9 +46,12 @@ char** ImageOperations::thresholdByValue(int thresh)
 }
 
 
-int ImageOperations::getOtsuThreshold()
+int ImageOperations::getOtsuThreshold(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel)
 {
+	int otsuThreshold = 0;
 	int totalPixels = 0;
+	double maxBetween = 0.0;
+
 	int* occurrences = new int[maxIntensityLevel];
 	float* histogram = new float[maxIntensityLevel];
 
@@ -84,8 +75,6 @@ int ImageOperations::getOtsuThreshold()
 		histogram[i] = (float)occurrences[i] / (float)totalPixels;
 	}
 
-	double maxBetween;
-
 	double* probability = new double[maxIntensityLevel];
 	double* mean = new double[maxIntensityLevel];
 	double* between = new double[maxIntensityLevel];
@@ -103,9 +92,6 @@ int ImageOperations::getOtsuThreshold()
 		probability[i] = probability[i - 1] + histogram[i];
 		mean[i] = mean[i - 1] + i * histogram[i];
 	}
-
-	otsuThreshold = 0;
-	maxBetween = 0.0;
 
 	for (int i = 0; i < maxIntensityLevel; i++)
 	{

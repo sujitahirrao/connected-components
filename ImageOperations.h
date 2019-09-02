@@ -7,19 +7,15 @@
 
 class ImageOperations
 {
-private:
-	char** imageMatrix;
-	int nRows, nCols, maxIntensityLevel, otsuThreshold;
 
 public:
 	ImageOperations();
-	ImageOperations(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel);
 
 	~ImageOperations();
 
-	int getOtsuThreshold();
+	int getOtsuThreshold(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel);
 
-	char** thresholdByValue(int thresh);
+	char** thresholdByValue(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel, int thresh);
 
 	void getConnectedComponents(int method);
 };

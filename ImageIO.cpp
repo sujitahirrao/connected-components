@@ -93,7 +93,7 @@ void ImageIO::writeImage(char** imageToWrite)
 	binImgFile << "P5" << "\n";
 	binImgFile << "# Created by ImageIO" << "\n";
 	binImgFile << nRows << " " << nCols << "\n";
-	binImgFile << "255" << "\n";
+	binImgFile << (int)maxIntensityLevel << "\n";
 
 	unsigned char pval;
 
