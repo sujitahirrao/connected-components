@@ -49,37 +49,35 @@ char** ImageOperations::thresholdByValue(char** imageMatrix, int nRows, int nCol
 int ImageOperations::getOtsuThreshold(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel)
 {
 	int otsuThreshold = 0;
-	int totalPixels = 0;
+	int pixelCount = 0;
 	double maxBetween = 0.0;
 
-	int* occurrences = new int[maxIntensityLevel];
+	int* frequencies = new int[maxIntensityLevel];
 	float* histogram = new float[maxIntensityLevel];
-
-	for (int i = 0; i < maxIntensityLevel; i++)
-	{
-		occurrences[i] = 0;
-		histogram[i] = 0;
-	}
-
-	for (int i = 0; i < nRows; i++)
-	{
-		for (int j = 0; j < nCols; j++)
-		{
-			int pVal = imageMatrix[i][j];
-			occurrences[pVal] = occurrences[pVal] + 1;
-			totalPixels++;
-		}
-	}
-
-	for (int i = 0; i <= maxIntensityLevel; i++) {
-		histogram[i] = (float)occurrences[i] / (float)totalPixels;
-	}
 
 	double* probability = new double[maxIntensityLevel];
 	double* mean = new double[maxIntensityLevel];
 	double* between = new double[maxIntensityLevel];
 
-	for (int i = 0; i < maxIntensityLevel + 1; i++) {
+	for (int i = 0; i < maxIntensityLevel; i++)
+	{
+		frequencies[i] = 0;
+		histogram[i] = 0;
+	}
+
+	for (int i = 0; i < nRows; i++)
+		for (int j = 0; j < nCols; j++)
+		{
+			int pVal = imageMatrix[i][j];
+			frequencies[pVal] = frequencies[pVal] + 1;
+			pixelCount++;
+		}
+
+	for (int i = 0; i <= maxIntensityLevel; i++) 
+		histogram[i] = (float)frequencies[i] / (float)pixelCount;
+
+	for (int i = 0; i < maxIntensityLevel + 1; i++) 
+	{
 		probability[i] = 0.0;
 		mean[i] = 0.0;
 		between[i] = 0.0;
