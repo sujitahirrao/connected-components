@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 	if (imagePath != NULL)
 	{
 		ImageIO imageIO = ImageIO(imagePath);
-		int** imageMatrix = imageIO.readImage();
+		char** imageMatrix = imageIO.readImage();
 
 		//ImageOperations imgOperator = ImageOperations();
 		//int** threshImg = imgOperator.thresholdByValue(imageMatrix, imageIO.nRows, imageIO.nCols, threshold);

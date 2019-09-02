@@ -25,7 +25,7 @@ ImageIO::~ImageIO()
 }
 
 
-int** ImageIO::readImage()
+char** ImageIO::readImage()
 {
 	stringstream ss;
 	string version = "", comment = "", iline = "";
@@ -55,13 +55,11 @@ int** ImageIO::readImage()
 
 		unsigned char pval;
 
-		imageMatrix = new int*[nRows];
+		imageMatrix = new char*[nRows];
 		for (int i = 0; i < nRows; i++)
 		{
-			imageMatrix[i] = new int[nCols];
-		}
-		for (int i = 0; i < nRows; i++)
-		{
+			imageMatrix[i] = new char[nCols];
+		
 			for (int j = 0; j < nCols; j++)
 			{
 				//ss >> pval;
@@ -87,30 +85,30 @@ int** ImageIO::readImage()
 }
 
 
-void ImageIO::writeImage(int** imageToWrite)
+void ImageIO::writeImage(char** imageToWrite)
 {
 	ofstream binImgFile(outImgPath, ios::binary);		// , ios::binary
 	//ofstream pixelValFile("..\\..\\data\\output\\pValues.txt");
 
 	binImgFile << "P5" << "\n";
-	binImgFile << "# Created by IrfanView" << "\n";
+	binImgFile << "# Created by ImageIO" << "\n";
 	binImgFile << nRows << " " << nCols << "\n";
 	binImgFile << "255" << "\n";
 
-	unsigned char pval;
+	/*unsigned int pval;
 
-	//for (int i = 0; i < nRows; i++)
-	//{
-	//	for (int j = 0; j < nCols; j++)
-	//	{
-	//		pval = imageToWrite[i][j];
-	//		binImgFile << pval;
-	//		//cout << imageToWrite[i][j] << " ";
-	//		pixelValFile << pval << " ";
-	//	}
-	//	binImgFile << endl;
-	//	pixelValFile << ";" << endl;
-	//}
+	for (int i = 0; i < nRows; i++)
+	{
+		for (int j = 0; j < nCols; j++)
+		{
+			pval = imageToWrite[i][j];
+			binImgFile << pval;
+			//cout << imageToWrite[i][j] << " ";
+			//pixelValFile << pval << " ";
+		}
+		binImgFile << endl;
+		//pixelValFile << ";" << endl;
+	}*/
 
 	for (int i = 0;i < nRows;++i)
 		binImgFile.write(reinterpret_cast<const char*>(imageToWrite[i]), nCols);

@@ -13,7 +13,7 @@ class ImageIO
 public:
 	
 	int nRows, nCols;
-	int** imageMatrix;
+	char** imageMatrix;
 	char* imagePath;
 	char* outImgPath = "..\\..\\data\\output\\output.pgm";
 
@@ -22,7 +22,7 @@ public:
 
 	~ImageIO();
 
-	int** readImage();
+	char** readImage();
 
-	void writeImage(int** imageToWrite);
+	void writeImage(char** imageToWrite);
 };
