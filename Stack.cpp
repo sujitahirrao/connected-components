@@ -26,7 +26,7 @@ Stack::~Stack()
 void Stack::push(int ele)
 {
 	if (top == (length - 1))
-		throw "Can't push onto a full stack";
+		throw "Error: Stack overflow!";
 	else
 	{
 		top++;
@@ -39,7 +39,7 @@ void Stack::push(int ele)
 int Stack::pop()
 {
 	if (top == -1)
-		throw "Can't pop from an empty stack";
+		throw "Error: Stack underflow!";
 	
 	int ele = arr[top];
 	top--;
