@@ -2,17 +2,24 @@
 
 #include<iostream>
 
+#include "Config.h"
+
 
 class ImageOperations
 {
+private:
+	char** imageMatrix;
+	int nRows, nCols, maxIntensityLevel, otsuThreshold;
+
 public:
 	ImageOperations();
+	ImageOperations(char** imageMatrix, int nRows, int nCols, int maxIntensityLevel);
 
 	~ImageOperations();
 
-	int** thresholdByValue(int** imageMatrix, int nRows, int nCols, int threshold);
+	int getOtsuThreshold();
 
-	void thresholdOtsu();
+	char** thresholdByValue(int thresh);
 
 	void getConnectedComponents(int method);
 };

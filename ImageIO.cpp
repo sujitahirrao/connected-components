@@ -8,6 +8,7 @@ ImageIO::ImageIO()
 {
 	nRows = 0;
 	nCols = 0;
+	maxIntensityLevel = 255;
 }
 
 
@@ -40,8 +41,7 @@ char** ImageIO::readImage()
 		ss << imgFile.rdbuf();
 		ss >> nRows >> nCols;
 
-		int max_intensity_val;
-		ss >> max_intensity_val;
+		ss >> maxIntensityLevel;
 		ss.ignore();
 
 		if (DEBUG)
@@ -50,7 +50,7 @@ char** ImageIO::readImage()
 			cout << "Comment:\t" << comment << endl;
 			cout << "Rows:\t\t" << nRows << endl;
 			cout << "Columns:\t" << nCols << endl;
-			cout << "Max level:\t" << max_intensity_val << endl;
+			cout << "Max level:\t" << maxIntensityLevel << endl;
 		}
 
 		unsigned char pval;
@@ -87,7 +87,7 @@ char** ImageIO::readImage()
 
 void ImageIO::writeImage(char** imageToWrite)
 {
-	ofstream binImgFile(outImgPath, ios::binary);		// , ios::binary
+	ofstream binImgFile(outImgPath, ios::binary);
 	//ofstream pixelValFile("..\\..\\data\\output\\pValues.txt");
 
 	binImgFile << "P5" << "\n";

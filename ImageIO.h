@@ -12,7 +12,7 @@ class ImageIO
 {
 public:
 	
-	int nRows, nCols;
+	int nRows, nCols, maxIntensityLevel;
 	char** imageMatrix;
 	char* imagePath;
 	char* outImgPath = "..\\..\\data\\output\\output.pgm";

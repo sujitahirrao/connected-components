@@ -53,10 +53,11 @@ int main(int argc, char** argv)
 		ImageIO imageIO = ImageIO(imagePath);
 		char** imageMatrix = imageIO.readImage();
 
-		//ImageOperations imgOperator = ImageOperations();
-		//int** threshImg = imgOperator.thresholdByValue(imageMatrix, imageIO.nRows, imageIO.nCols, threshold);
+		ImageOperations imgOperator = ImageOperations(imageMatrix, imageIO.nRows, imageIO.nCols, imageIO.maxIntensityLevel);
+		int otsuThreshold = imgOperator.getOtsuThreshold();
+		char** threshImg = imgOperator.thresholdByValue(otsuThreshold);
 
-		imageIO.writeImage(imageMatrix);
+		imageIO.writeImage(threshImg);
 	}
 
 	cout << endl;
