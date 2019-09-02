@@ -95,7 +95,7 @@ void ImageIO::writeImage(char** imageToWrite)
 	binImgFile << nRows << " " << nCols << "\n";
 	binImgFile << "255" << "\n";
 
-	/*unsigned int pval;
+	unsigned char pval;
 
 	for (int i = 0; i < nRows; i++)
 	{
@@ -106,12 +106,8 @@ void ImageIO::writeImage(char** imageToWrite)
 			//cout << imageToWrite[i][j] << " ";
 			//pixelValFile << pval << " ";
 		}
-		binImgFile << endl;
 		//pixelValFile << ";" << endl;
-	}*/
-
-	for (int i = 0;i < nRows;++i)
-		binImgFile.write(reinterpret_cast<const char*>(imageToWrite[i]), nCols);
+	}
 
 	binImgFile.close();
 	//pixelValFile.close();
